@@ -15,7 +15,7 @@ class GradientBackground extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
       ),
-      child: child, // This allows us to insert any screen's content inside the gradient
+      child: child,
     );
   }
 }

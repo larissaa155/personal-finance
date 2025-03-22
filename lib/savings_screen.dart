@@ -25,9 +25,9 @@ class _SavingsScreenState extends State<SavingsScreen> {
 
 Widget _buildBottomNavBar(BuildContext context, int currentIndex) {
   return BottomNavigationBar(
-    backgroundColor: Colors.blueGrey[900], // Dark background
-    selectedItemColor: Colors.green, // Green color for selected tab
-    unselectedItemColor: Colors.black38, // White for unselected tabs
+    backgroundColor: Colors.blueGrey[900],
+    selectedItemColor: Colors.green,
+    unselectedItemColor: Colors.black38,
     currentIndex: currentIndex,
     onTap: (index) {
       if (index != currentIndex) {
