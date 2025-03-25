@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/ai_insights_service.dart'; // Make sure the path is correct
+import '../services/ai_insights_service.dart';
 
 class SmartInsightsCard extends StatelessWidget {
   final List<Transaction> transactions;
