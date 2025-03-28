@@ -64,6 +64,10 @@ class DatabaseHelper {
     return await db.insert(savingsTable, goal.toMap());
   }
 
+  Future<void> deleteAllTransactions() async {
+    final db = await database;
+    await db.delete('transactions');
+  }
 
   Future<List<SavingsGoal>> getSavingsGoals() async {
     final db = await database;
@@ -71,3 +75,5 @@ class DatabaseHelper {
     return List.generate(maps.length, (i) => SavingsGoal.fromMap(maps[i]));
   }
 }
+
+
