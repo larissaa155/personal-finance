@@ -54,14 +54,9 @@ class DatabaseHelper {
 
   Future<List<Transaction>> getTransactions() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query(transactionTable, orderBy: 'date DESC');
+    final List<Map<String, dynamic>> maps = await db.query(
+        transactionTable, orderBy: 'date DESC');
     return List.generate(maps.length, (i) => Transaction.fromMap(maps[i]));
-  }
-
-
-  Future<int> insertSavingsGoal(SavingsGoal goal) async {
-    final db = await database;
-    return await db.insert(savingsTable, goal.toMap());
   }
 
   Future<void> deleteAllTransactions() async {
@@ -69,11 +64,22 @@ class DatabaseHelper {
     await db.delete('transactions');
   }
 
+  Future<int> insertSavingsGoal(SavingsGoal goal) async {
+    final db = await database;
+    return await db.insert('savings_goals', goal.toMap());
+  }
+
   Future<List<SavingsGoal>> getSavingsGoals() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query(savingsTable);
+    final List<Map<String, dynamic>> maps = await db.query('savings_goals');
     return List.generate(maps.length, (i) => SavingsGoal.fromMap(maps[i]));
   }
+
+  Future<void> deleteSavingsGoal(int id) async {
+    final db = await database;
+    await db.delete('savings_goals', where: 'id = ?', whereArgs: [id]);
+  }
 }
+
 
 

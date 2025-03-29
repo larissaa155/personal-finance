@@ -78,7 +78,8 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
           child: _transactions.isEmpty
               ? const Center(
             child: Text(
-              'No transactions available.',
+              'No transactions available.\nTap + to add one!',
+              textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white),
             ),
           )
