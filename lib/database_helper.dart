@@ -75,6 +75,16 @@ class DatabaseHelper {
     return List.generate(maps.length, (i) => SavingsGoal.fromMap(maps[i]));
   }
 
+  Future<void> updateSavedAmount(int id, double newAmount) async {
+    final db = await database;
+    await db.update(
+      savingsTable,
+      {'savedAmount': newAmount},
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<void> deleteSavingsGoal(int id) async {
     final db = await database;
     await db.delete('savings_goals', where: 'id = ?', whereArgs: [id]);

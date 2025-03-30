@@ -47,35 +47,70 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
             children: [
               TextField(
                 controller: _titleController,
-                decoration: const InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(
+                  labelText: 'Title',
+                  labelStyle: TextStyle(color: Colors.white),
+                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                ),
                 style: const TextStyle(color: Colors.white),
               ),
+
               TextField(
                 controller: _amountController,
-                decoration: const InputDecoration(labelText: 'Amount'),
+                decoration: const InputDecoration(
+                  labelText: 'Amount',
+                  labelStyle: TextStyle(color: Colors.white),
+                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                ),
                 keyboardType: TextInputType.number,
                 style: const TextStyle(color: Colors.white),
               ),
+
               DropdownButtonFormField(
                 value: _selectedType,
                 items: ['Income', 'Expense'].map((type) {
-                  return DropdownMenuItem(value: type, child: Text(type));
+                  return DropdownMenuItem(
+                    value: type,
+                    child: Text(type, style: const TextStyle(color: Colors.white)),
+                  );
                 }).toList(),
                 onChanged: (value) => setState(() => _selectedType = value!),
-                decoration: const InputDecoration(labelText: 'Type'),
+                decoration: const InputDecoration(
+                  labelText: 'Type',
+                  labelStyle: TextStyle(color: Colors.white),
+                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                ),
+                dropdownColor: Colors.black,
+                style: const TextStyle(color: Colors.white),
               ),
+
               DropdownButtonFormField(
                 value: _selectedCategory,
                 items: _categories.map((category) {
-                  return DropdownMenuItem(value: category, child: Text(category));
+                  return DropdownMenuItem(
+                    value: category,
+                    child: Text(category, style: const TextStyle(color: Colors.white)),
+                  );
                 }).toList(),
                 onChanged: (value) => setState(() => _selectedCategory = value!),
-                decoration: const InputDecoration(labelText: 'Category'),
+                decoration: const InputDecoration(
+                  labelText: 'Category',
+                  labelStyle: TextStyle(color: Colors.white),
+                  enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                  focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                ),
+                dropdownColor: Colors.black,
+                style: const TextStyle(color: Colors.white),
               ),
+
               const SizedBox(height: 20),
+
               ElevatedButton(
                 onPressed: _saveTransaction,
-                child: const Text('Save Transaction'),
+                child: Text('Save Transaction', style: TextStyle(color: Colors.green[900])),
               ),
             ],
           ),

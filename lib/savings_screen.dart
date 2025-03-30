@@ -46,34 +46,84 @@ class _SavingsScreenState extends State<SavingsScreen> {
     _loadSavingsGoals();
   }
 
+  Future<void> _showAddMoneyDialog(SavingsGoal goal) async {
+    final TextEditingController amountController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Add Money to ${goal.title}'),
+          content: TextField(
+            controller: amountController,
+            decoration: const InputDecoration(labelText: 'Amount'),
+            keyboardType: TextInputType.number,
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),
+            ElevatedButton(
+              onPressed: () async {
+                double amountToAdd = double.tryParse(amountController.text) ?? 0.0;
+                if (amountToAdd > 0) {
+                  double newAmount = goal.savedAmount + amountToAdd;
+                  await DatabaseHelper().updateSavedAmount(goal.id!, newAmount);
+                  _loadSavingsGoals();
+                  Navigator.of(context).pop();
+                }
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Savings Goals', style: TextStyle(color: Colors.green[900])), centerTitle: true),
       body: GradientBackground(
-        child: Column(
+        child: _savingsGoals.isEmpty
+            ? Center(
+          child: Text(
+            'No savings goals available.\nTap + to add one!',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
+        )
+            : Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  TextField(controller: _titleController, decoration: const InputDecoration(labelText: 'Goal Title')),
-                  TextField(controller: _targetAmountController, decoration: const InputDecoration(labelText: 'Target Amount'), keyboardType: TextInputType.number),
-                  const SizedBox(height: 10),
-                  ElevatedButton(onPressed: _addSavingsGoal, child: const Text('Add Savings Goal')),
-                ],
-              ),
-            ),
             Expanded(
               child: ListView.builder(
                 itemCount: _savingsGoals.length,
                 itemBuilder: (context, index) {
                   final goal = _savingsGoals[index];
+                  double progress = goal.savedAmount / goal.targetAmount;
+
                   return Card(
                     child: ListTile(
                       title: Text(goal.title),
-                      subtitle: Text('Saved: \$${goal.savedAmount} / \$${goal.targetAmount}'),
-                      trailing: IconButton(icon: const Icon(Icons.delete), onPressed: () => _deleteSavingsGoal(goal.id!)),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Saved: \$${goal.savedAmount} / \$${goal.targetAmount}'),
+                          LinearProgressIndicator(value: progress, minHeight: 6, backgroundColor: Colors.grey[300], color: Colors.green),
+                        ],
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.add),
+                            onPressed: () => _showAddMoneyDialog(goal),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.red,),
+                            onPressed: () => _deleteSavingsGoal(goal.id!),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -82,7 +132,41 @@ class _SavingsScreenState extends State<SavingsScreen> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showAddGoalDialog(),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.green[900],
+        child: const Icon(Icons.add),
+      ),
       bottomNavigationBar: _buildBottomNavBar(context, _selectedIndex),
+    );
+  }
+
+  void _showAddGoalDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('New Savings Goal'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(controller: _titleController, decoration: const InputDecoration(labelText: 'Goal Title')),
+              TextField(controller: _targetAmountController, decoration: const InputDecoration(labelText: 'Target Amount'), keyboardType: TextInputType.number),
+            ],
+          ),
+          actions: [
+            TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),
+            ElevatedButton(
+              onPressed: () {
+                _addSavingsGoal();
+                Navigator.of(context).pop();
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

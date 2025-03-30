@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'gradient_background.dart';
 import 'database_helper.dart';
-import 'transaction.dart';
 import 'package:intl/intl.dart';
 
 class ReportsScreen extends StatefulWidget {
@@ -104,6 +103,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
       children: [
         DropdownButton<int>(
           value: _selectedMonth,
+          dropdownColor: Colors.black,
+          style: const TextStyle(color: Colors.white),
           onChanged: (newValue) {
             setState(() {
               _selectedMonth = newValue!;
@@ -113,13 +114,18 @@ class _ReportsScreenState extends State<ReportsScreen> {
           items: List.generate(12, (index) {
             return DropdownMenuItem(
               value: index + 1,
-              child: Text(DateFormat.MMMM().format(DateTime(0, index + 1))),
+              child: Text(
+                DateFormat.MMMM().format(DateTime(0, index + 1)),
+                style: const TextStyle(color: Colors.white),
+              ),
             );
           }),
         ),
         const SizedBox(width: 16),
         DropdownButton<int>(
           value: _selectedYear,
+          dropdownColor: Colors.black,
+          style: const TextStyle(color: Colors.white),
           onChanged: (newValue) {
             setState(() {
               _selectedYear = newValue!;
@@ -128,7 +134,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
           },
           items: List.generate(10, (index) {
             int year = DateTime.now().year - index;
-            return DropdownMenuItem(value: year, child: Text(year.toString()));
+            return DropdownMenuItem(
+              value: year,
+              child: Text(
+                year.toString(),
+                style: const TextStyle(color: Colors.white),
+              ),
+            );
           }),
         ),
       ],
