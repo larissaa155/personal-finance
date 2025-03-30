@@ -1,16 +1,3 @@
-# project1
+# Personal Finance App
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+With this Personal Finance App users get access to multiple features that are easy to use and understand. When users open the app they are greeted to a Dashboard that displays their balance, income, and expenses. At the bottom of the screen is a navigation bar where users can move from the dashboard to other areas of the app, like the Transaction screen. In the transaction screen, users are able to see a list of their transactions, and can add transactions too. When they add transactions they can list whether its an expense or income, and they can also select what category their expense is (Ex. Food, Transportation, Rent, etc.). After adding a transaction, a pie chart is created in the user's dashboard that displays their expenses by category. Continuing with the navigation bar, after transactions is the Reports screen. On this screen the app tracks the users Income Vs Expenses every month/year, and users can select which month and year they would like and see how their income and expenses compare. 
